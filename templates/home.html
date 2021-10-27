@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Microblog</title>
+</head>
+<body>
+<header>
+    <form method="post" onsubmit="return post(this);">
+        <h3>Pagina Inicial</h3>
+        <label for="input_name">Nome:</label>
+        <input type="text" id="input_name" name="name"/>
+        <label for="input_post"> O que você está pensando?</label>
+        <input type="text" id="input_post" name="post"/>
+        <button type="submit"> Enviar</button>
+    </form>
+    <form>
+        <label for="exemplo">Teste</label><input type="text" id="exemplo" name="exemplo"/>
+    </form>
+</header>
+<article id="post_list">
+
+</article>
+<footer>
+</footer>
+<script>
+    function post(form) {
+        var formData = new FormData(form);
+
+        let xhr = new XMLHttpRequest();
+        xhr.open("POST", "{{ url_for('inserir') }}");
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                document.getElementById("post_list").innerHTML = xhr.response;
+            }
+        }
+        xhr.send(formData);
+        return false;
+    }
+
+</script>
+</body>
+</html>

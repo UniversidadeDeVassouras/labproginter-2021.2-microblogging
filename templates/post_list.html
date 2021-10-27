@@ -1,0 +1,8 @@
+{% if post_list != None %}
+    {% for post in post_list %}
+        <section>
+            <h4>{{ post.get_name() }}</h4>
+            <p>{{ post.get_post() }}</p>
+        </section>
+    {% endfor %}
+{% endif %}
