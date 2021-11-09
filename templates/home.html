@@ -5,26 +5,44 @@
     <title>Microblog</title>
 </head>
 <body>
-<header>
-    <form method="post" onsubmit="return post(this);">
-        <h3>Pagina Inicial</h3>
-        <label for="input_name">Nome:</label>
-        <input type="text" id="input_name" name="name"/>
-        <label for="input_post"> O que você está pensando?</label>
-        <input type="text" id="input_post" name="post"/>
-        <button type="submit"> Enviar</button>
-    </form>
-    <form>
-        <label for="exemplo">Teste</label><input type="text" id="exemplo" name="exemplo"/>
-    </form>
-</header>
-<article id="post_list">
+<nav>
+    <ul>
+        <li><a onclick="return carregarFormulario();">Formulário</a></li>
+        <li><a onclick="return carregarListaCompleta();">Lista Completa</a></li>
+    </ul>
+</nav>
+<section id="conteudo">
 
-</article>
+</section>
 <footer>
 </footer>
 <script>
-    function post(form) {
+
+    function carregarListaCompleta() {
+        let xhr = new XMLHttpRequest();
+        xhr.open("GET", "{{ url_for('lista_completa') }}" );
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                document.getElementById("conteudo").innerHTML = xhr.response;
+            }
+        }
+        xhr.send();
+        return false;
+    }
+
+    function carregarFormulario() {
+        let xhr = new XMLHttpRequest();
+        xhr.open("GET", "{{ url_for('formulario') }}" );
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                document.getElementById("conteudo").innerHTML = xhr.response;
+            }
+        }
+        xhr.send();
+        return false;
+    }
+
+    function enviar(form) {
         var formData = new FormData(form);
 
         let xhr = new XMLHttpRequest();

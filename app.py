@@ -22,6 +22,13 @@ post_list = []
 def index():  # put application's code here
     return render_template("home.html")
 
+@app.route("/formulario", methods=['GET'])
+def formulario():
+    return render_template("formulario.html")
+
+@app.route("/listacompleta", methods=['GET'])
+def lista_completa():
+    return render_template("post_list.html", post_list=post_list)
 
 @app.route('/post', methods=['POST'])
 def inserir():
