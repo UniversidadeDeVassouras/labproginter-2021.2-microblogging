@@ -48,8 +48,12 @@
         let xhr = new XMLHttpRequest();
         xhr.open("POST", "{{ url_for('inserir') }}");
         xhr.onreadystatechange = function () {
-            if (xhr.readyState === 4 && xhr.status === 200) {
-                document.getElementById("post_list").innerHTML = xhr.response;
+            if (xhr.readyState === 4 && xhr.status === 201) {
+                html = "";
+                JSON.parse(xhr.response).forEach(function (post) {
+                    html += "<section><h4>"+ post.name +"</h4><p>" + post.post + "</p></section> "
+                });
+                document.getElementById("post_list").innerHTML = html;
             }
         }
         xhr.send(formData);

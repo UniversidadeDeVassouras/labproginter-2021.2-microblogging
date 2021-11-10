@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, jsonify
 
 app = Flask(__name__)
 
@@ -13,6 +13,12 @@ class Post:
 
     def get_post(self):
         return self.__post
+
+    def to_dict(self):
+        return {
+            "name": self.__name,
+            "post": self.__post
+        }
 
 
 post_list = []
@@ -34,7 +40,11 @@ def lista_completa():
 def inserir():
     post = Post(request.form['name'], request.form['post'])
     post_list.append(post)
-    return render_template("post_list.html", post_list=post_list)
+    #post_list_dict = []
+    #for post in post_list:
+    #    post_list_dict.append(post.to_dict())
+    #return jsonify(post_list), 201
+    return jsonify([post.to_dict() for post in post_list]), 201, {"Content-Type": "application/json"}
 
 
 if __name__ == '__main__':
